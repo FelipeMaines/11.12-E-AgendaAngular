@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-11 mx-auto mt-5">
+            <!-- Titulo -->
+            <div class="text-md-start">
+              <h1 class="fw-bold text-primary">Listar Contatos</h1>
+              <hr />
+            </div>
+      
+            <!-- Barra de Ações -->
+            <div class="d-grid d-md-flex gap-1 mt-3">
+              <a
+                [routerLink]="['/compromisso/inserir']"
+                role="button"
+                class="btn btn-primary me-md-1"
+              >
+                <i class="pi pi-plus-circle me-2"></i>
+                Novo Compromisso
+              </a>
+            </div>
+
+                <div class="row">
+                  <div class="col-12 col-md-6 col-lg-4 my-1" *ngFor="let compromisso of listaCompromisso">
+                    <a href="" class="text-decoration-none" routerLink="/compromisso/editar/{{ compromisso.id }}">
+                        <div class="card d-flex align-items-center">
+                            <div class="card-body">
+                              <h5 class="card-title">Assunto: {{compromisso.assunto}}</h5>
+                              <p class="card-text">Data: {{compromisso.data}}</p>
+                              <div class="d-flex gap-1">
+                                <h6 class="card-subtitle mb-2 text-body-secondary">Horário: {{compromisso.horaInicio}}</h6>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">{{compromisso.horaTermino}}</h6>
+                              </div>
+                              <p class="card-text">Contato: {{compromisso.nomeContato}}</p>
+                            </div>
+                          </div>
+                    </a>
+                  </div>
+                </div>
+    </div>
+</div>
