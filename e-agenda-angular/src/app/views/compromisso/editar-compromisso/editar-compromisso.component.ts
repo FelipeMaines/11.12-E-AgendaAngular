@@ -57,13 +57,13 @@ export class EditarCompromissoComponent implements OnInit{
     })
     this.idSelecionado = this.route.snapshot.paramMap.get('id');
 
-    if(!this.idSelecionado) return
+    this.compromisso = this.route.snapshot.data['compromisso'];
 
-    this.compromissoService.selecionarPorId(this.idSelecionado).subscribe(res => {
-      this.form.patchValue(res);
-      console.log(res);
-      this.form.get('data')?.setValue(res.data.toString().substring(0, 10))
-    });
+    console.log(this.compromisso);
+
+    this.form.patchValue(this.compromisso);
+
+    this.form.get('data')?.setValue(this.compromisso.data.toString().substring(0, 10))
   }
 
   

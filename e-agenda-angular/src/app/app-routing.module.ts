@@ -14,6 +14,9 @@ import { ContatosService } from './views/contatos/services/contatos.service';
 import { ListarCompromissoViewModel } from './views/compromisso/models/listar-compromissos.view.model';
 import { ListarContatoViewModel } from './views/contatos/models/listar-contato.view-model';
 import { VisualizarContatoViewModel } from './views/contatos/models/visualizar-contato.view-model';
+import { VisualizarCompromissoViewModel } from './views/compromisso/models/visualizar-compromisso.view-model';
+import { ServicoCompromisso } from './views/compromisso/services/compromisso.service';
+import { FormsCompromissoViewModel } from './views/compromisso/models/forms-compromisso.view.model';
 
 const listarContatosResolver: ResolveFn<ListarContatoViewModel[]> = () => {
   return inject(ContatosService).selecionarTodos();
@@ -27,6 +30,22 @@ const visualizarContatoResolver: ResolveFn<VisualizarContatoViewModel> = (
   route: ActivatedRouteSnapshot
 ) => {
   return inject(ContatosService).selecionarContatoCompletoPorId(
+    route.paramMap.get('id')!
+  );
+};
+
+const listarCompromissosResolver: ResolveFn<ListarCompromissoViewModel[]> = () => {
+  return inject(ServicoCompromisso).selecionarTodos();
+}
+
+const formsCompromissoResolver: ResolveFn<FormsCompromissoViewModel> = (route: ActivatedRouteSnapshot) => {
+  return inject(ServicoCompromisso).selecionarPorId(route.paramMap.get('id')!);
+}
+
+const visualizarCompromissoResolver: ResolveFn<VisualizarCompromissoViewModel> = (
+  route: ActivatedRouteSnapshot
+) => {
+  return inject(ServicoCompromisso).selecionarContatoCompletoPorId(
     route.paramMap.get('id')!
   );
 };
@@ -67,6 +86,7 @@ const routes: Routes = [
   {
     path: 'compromisso/listar',
     component: ListarCompromissoComponent,
+    resolve: {listaCompromisso: listarCompromissosResolver}
   },
   {
     path: 'compromisso/inserir',
@@ -75,6 +95,7 @@ const routes: Routes = [
   {
     path: 'compromisso/editar/:id',
     component: EditarCompromissoComponent,
+    resolve: {compromisso: formsCompromissoResolver}
   },
   {
     path: 'compromisso/excluir/:id',
