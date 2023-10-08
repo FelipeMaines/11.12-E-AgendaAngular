@@ -46,6 +46,11 @@ export class InserirContatoComponent implements OnInit {
 
   gravar() {
     if (this.form.invalid) {
+      for(let erro of this.form.validate())
+      {
+        this.toastrService.warning(erro);
+      }
+
       return;
     }
 

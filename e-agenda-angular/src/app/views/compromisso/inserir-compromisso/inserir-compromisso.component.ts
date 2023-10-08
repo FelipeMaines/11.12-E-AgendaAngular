@@ -5,6 +5,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { ListarContatoViewModel } from '../../contatos/models/listar-contato.view-model';
 import { ContatosService } from '../../contatos/services/contatos.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-inserir-compromisso',
@@ -20,7 +21,8 @@ export class InserirCompromissoComponent implements OnInit{
     private formBuilder: FormBuilder,
     private compromiossoService: ServicoCompromisso,
     private router: Router,
-    private contatoService: ContatosService
+    private contatoService: ContatosService,
+    private toastrService: ToastrService
   ) {}
 
 
@@ -32,7 +34,7 @@ export class InserirCompromissoComponent implements OnInit{
 
     this.form = this.formBuilder.group({
       assunto: new FormControl('', [Validators.required]),
-      tipoLocal: new FormControl('', [Validators.required, Validators.email]),
+      tipoLocal: new FormControl('', [Validators.required]),
       link: new FormControl('', [Validators.required]),
       local: new FormControl('', [Validators.required]),
       data: new FormControl('', [Validators.required]),
@@ -46,14 +48,17 @@ export class InserirCompromissoComponent implements OnInit{
   }
   
   gravar(){
-    this.compromisso = this.form.value;
-    console.log(this.compromisso);
 
-    console.log(this.compromisso)
+    if (this.form.invalid) {
+      for(let erro of this.form.validate())
+      {
+        this.toastrService.warning(erro);
+      }
+    }
+
+    this.compromisso = this.form.value;
 
     this.compromiossoService.inserir(this.compromisso).subscribe((res) => {
-      console.log(res);
-
       this.router.navigate(['compromisso/listar'])
     });
   }
