@@ -6,10 +6,8 @@ import { ExcluirCompromissoComponent } from './excluir-compromisso/excluir-compr
 import { EditarCompromissoComponent } from './editar-compromisso/editar-compromisso.component';
 import { ServicoCompromisso } from './services/compromisso.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import { ContatosService } from '../contatos/services/contatos.service';
-
-
+import { CompromissoRoutingModule } from './compromisso-routing.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +16,7 @@ import { ContatosService } from '../contatos/services/contatos.service';
     ExcluirCompromissoComponent,
     EditarCompromissoComponent
   ],
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, CompromissoRoutingModule],
   providers: [ServicoCompromisso, ContatosService],
   
 })
