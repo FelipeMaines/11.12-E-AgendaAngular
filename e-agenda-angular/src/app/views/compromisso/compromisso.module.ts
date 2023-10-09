@@ -19,7 +19,7 @@ import { ContatosService } from '../contatos/services/contatos.service';
     EditarCompromissoComponent
   ],
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
-  providers: [ServicoCompromisso],
+  providers: [ServicoCompromisso, ContatosService],
   
 })
 export class CompromissoModule { }

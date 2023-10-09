@@ -33,7 +33,6 @@ import { CompromissoModule } from './views/compromisso/compromisso.module';
     HttpClientModule,
     CoreModule,
     DashboardModule,
-    ContatosModule,
     CompromissoModule,
   ],
   providers: [],

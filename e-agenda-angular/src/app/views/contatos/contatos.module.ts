@@ -8,10 +8,11 @@ import { RouterModule } from '@angular/router';
 import { EditarContatoComponent } from './editar-contato/editar-contato.component';
 import { ExcluirContatoComponent } from './excluir-contato/excluir-contato.component';
 import 'src/app/extensions/form-group.extension';
+import { ContatosRoutingModule } from './contatos-routing.module';
 
 @NgModule({
   declarations: [InserirContatoComponent, ListarContatosComponent, EditarContatoComponent, ExcluirContatoComponent],
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, ContatosRoutingModule],
   providers: [ContatosService],
 })
 export class ContatosModule {}
