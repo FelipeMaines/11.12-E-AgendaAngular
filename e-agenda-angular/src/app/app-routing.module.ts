@@ -24,6 +24,12 @@ const routes: Routes = [
     loadChildren: () => import('./views/compromisso/compromisso.module')
     .then(mod => mod.CompromissoModule)
   },
+
+  {
+    path: 'categoria',
+    loadChildren: () => import('./views/categoria/categoria.module')
+    .then(mod => mod.CategoriaModule)
+  }
 ];
 
 @NgModule({
