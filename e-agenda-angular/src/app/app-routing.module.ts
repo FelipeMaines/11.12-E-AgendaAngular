@@ -29,7 +29,12 @@ const routes: Routes = [
     path: 'categoria',
     loadChildren: () => import('./views/categoria/categoria.module')
     .then(mod => mod.CategoriaModule)
-  }
+  },
+  {
+    path: 'despesa',
+    loadChildren: () => import('./views/despesa/despesa.module')
+    .then(mod => mod.DespesaModule)
+  },
 ];
 
 @NgModule({

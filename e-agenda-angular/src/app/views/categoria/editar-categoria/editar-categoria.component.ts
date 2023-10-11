@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormCategoriaViewModel } from '../model/forms-categoria.view-model';
 import { ListarCategoriaViewModel } from '../model/listar-categoria.view-model';
 import { CategoriaService } from '../service/categoriaService.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-editar-categoria',
@@ -13,18 +14,29 @@ import { CategoriaService } from '../service/categoriaService.service';
 })
 export class EditarCategoriaComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private categoriaService: CategoriaService, private router: Router,) { }
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private categoriaService: CategoriaService, private router: Router,private toastr: ToastrService) { }
 
   form!: FormGroup
   categoria!: ListarCategoriaViewModel;
   idSelecionado: string | null = null;
 
   gravar() {
-    this.categoriaService.editar(this.form.value, this.idSelecionado!).subscribe(res => this.router.navigate(['compromisso/listar']))
+
+    if(this.form.invalid)
+    {
+      for(let err of this.form.validate())
+      {
+        this.toastr.warning(err);
+      }
+      return;
+    }
+
+
+    this.categoriaService.editar(this.form.value, this.idSelecionado!).subscribe(res => this.router.navigate(['categoria/listar']))
   }
 
   excluir(){
-    this.categoriaService.excluir(this.idSelecionado!).subscribe(res => this.router.navigate(['compromisso/listar']))
+    this.categoriaService.excluir(this.idSelecionado!).subscribe(res => this.router.navigate(['categoria/listar']))
   }
 
   campoEstaInvalido(nome: string) {

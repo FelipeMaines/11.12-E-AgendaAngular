@@ -32,7 +32,7 @@ export class InserirContatoComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       telefone: new FormControl('', [Validators.required]),
       cargo: new FormControl('', [Validators.required]),
-      empresa: new FormControl('', [Validators.required]),
+      empresa: new FormControl([], [Validators.required]),
     });
   }
 
