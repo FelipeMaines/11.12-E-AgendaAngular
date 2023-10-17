@@ -5,13 +5,14 @@ import { environment } from 'src/environments/environment';
 import { FormsContatoViewModel } from '../models/forms-contato.view-model';
 import { ListarContatoViewModel } from '../models/listar-contato.view-model';
 import { VisualizarContatoViewModel } from '../models/visualizar-contato.view-model';
+import { LocalStorageService } from 'src/app/core/auth/services/local-storage.service';
 
 @Injectable()
 export class ContatosService {
   private endpoint: string =
     'https://e-agenda-web-api.onrender.com/api/contatos/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private localStorageService: LocalStorageService) { }
 
   public inserir(contato: FormsContatoViewModel): Observable<FormsContatoViewModel> {
     return this.http.post<any>(this.endpoint, contato, this.obterHeadersAutorizacao()).pipe(
@@ -75,13 +76,13 @@ export class ContatosService {
   }
 
   private obterHeadersAutorizacao() {
-    const token = environment.apiKey;
+    const token = this.localStorageService.obterDadosLocaisSalvos()?.chave;
 
     return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      }),
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        }),
     };
-  }
+}
 }

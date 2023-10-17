@@ -5,11 +5,12 @@ import { FormsCompromissoViewModel } from "../../compromisso/models/forms-compro
 import { Observable, map } from "rxjs";
 import { ListarCompromissoViewModel } from "../../compromisso/models/listar-compromissos.view.model";
 import { VisualizarCompromissoViewModel } from "../../compromisso/models/visualizar-compromisso.view-model";
+import { LocalStorageService } from "src/app/core/auth/services/local-storage.service";
 
 @Injectable()
 export class ServicoCompromisso{
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private localStorageService: LocalStorageService) {}
 
     private endpoint: string =
     'https://e-agenda-web-api.onrender.com/api/compromissos/';
@@ -58,14 +59,14 @@ export class ServicoCompromisso{
       }
     
     
-    private obterHeadersAutorizacao() {
-        const token = environment.apiKey;
-    
+      private obterHeadersAutorizacao() {
+        const token = this.localStorageService.obterDadosLocaisSalvos()?.chave;
+
         return {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          }),
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            }),
         };
-      }
+    }
 }
