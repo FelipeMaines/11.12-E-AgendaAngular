@@ -3,6 +3,7 @@ import { TokenViewModel } from "../models/token.view-model";
 
 @Injectable()
 export class LocalStorageService{
+    
     private chaveLocalStorage: string = 'e-agenda-dados';
 
 
@@ -18,5 +19,9 @@ export class LocalStorageService{
         if (!jsonString) return undefined;
     
         return JSON.parse(jsonString) as TokenViewModel;
+      }
+
+      public limparDadosLocais(): void {
+        localStorage.setItem(this.chaveLocalStorage, '');
       }
 }
