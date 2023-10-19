@@ -15,21 +15,21 @@ export class DespesaService {
     'https://e-agenda-web-api.onrender.com/api/despesas/';
 
     public selecionarTodos(): Observable<ListarDespesaViewModel[]>{
-        return this.http.get<any>(this.endpoint, this.obterHeadersAutorizacao()).pipe(
+        return this.http.get<any>(this.endpoint).pipe(
             map(res => res.dados),
             catchError((err: HttpErrorResponse) => this.processarErroHttp(err))
         )
     }
 
     public selecionarPorId(id: string): Observable<FormDespesaViewModel>{
-        return this.http.get<any>(this.endpoint + id, this.obterHeadersAutorizacao()).pipe(
+        return this.http.get<any>(this.endpoint + id).pipe(
             map(res => (res.dados)),
             catchError((err: HttpErrorResponse) => this.processarErroHttp(err))
         )
     }
 
     public inserir(despesa: FormDespesaViewModel){
-        return this.http.post<any>(this.endpoint, despesa, this.obterHeadersAutorizacao())
+        return this.http.post<any>(this.endpoint, despesa)
         .pipe(
             map(res => res.dados),
             catchError(err => this.processarErroHttp(err))
@@ -37,7 +37,7 @@ export class DespesaService {
     }
     
     public editar(despesa: FormDespesaViewModel, id: string){
-        return this.http.put<any>(this.endpoint + id, despesa, this.obterHeadersAutorizacao())
+        return this.http.put<any>(this.endpoint + id, despesa)
         .pipe(
             map(res => res.dados),
             catchError(err => this.processarErroHttp(err))
@@ -45,22 +45,11 @@ export class DespesaService {
     }
 
     public excluir(id: string): Observable<any> {
-        return this.http.delete(this.endpoint + id, this.obterHeadersAutorizacao())
+        return this.http.delete(this.endpoint + id)
           .pipe(
             catchError((err: HttpErrorResponse) => this.processarErroHttp(err))
           );
       }
-
-      private obterHeadersAutorizacao() {
-        const token = this.localStorageService.obterDadosLocaisSalvos()?.chave;
-
-        return {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            }),
-        };
-    }
 
       processarErroHttp(err: HttpErrorResponse) {
         let msgErro = '';

@@ -64,7 +64,7 @@ export class AuthService {
 
       public logout(): Observable<any> {
         return this.http
-          .post<any>(this.endpointLogout, {}, this.obterHeadersAutorizacao())
+          .post<any>(this.endpointLogout, {})
           .pipe(
             tap(() => this.notificarLogout()),
             tap(() => this.localStorage.limparDadosLocais())
@@ -91,15 +91,4 @@ export class AuthService {
     
         return throwError(() => new Error(mensagemErro));
       }
-
-      private obterHeadersAutorizacao() {
-        const token = this.localStorage.obterDadosLocaisSalvos()?.chave;
-    
-        return {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          }),
-        };
-        }
 }

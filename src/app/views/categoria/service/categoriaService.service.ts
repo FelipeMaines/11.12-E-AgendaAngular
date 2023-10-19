@@ -30,7 +30,7 @@ export class CategoriaService {
     }
 
     public selecionarTodos(): Observable<ListarCategoriaViewModel[]> {
-        return this.http.get<any>(this.endpoint, this.obterHeadersAutorizacao()).pipe(
+        return this.http.get<any>(this.endpoint).pipe(
             map(res => res.dados),
             catchError(err => this.processarErroHttp(err))
         )
@@ -39,14 +39,14 @@ export class CategoriaService {
     public selecionarPorId(id: string): Observable<FormCategoriaViewModel> {
         console.log('entrei servico selecionar')
         console.log(id);
-        return this.http.get<any>(this.endpoint + id, this.obterHeadersAutorizacao()).pipe(
+        return this.http.get<any>(this.endpoint + id).pipe(
             map(res => res.dados),
             catchError(err => this.processarErroHttp(err))
         )
     }
 
     public inserir(categoria: FormCategoriaViewModel): Observable<FormCategoriaViewModel> {
-        return this.http.post<any>(this.endpoint, categoria, this.obterHeadersAutorizacao()).pipe(
+        return this.http.post<any>(this.endpoint, categoria).pipe(
             map(res => res.dados),
             catchError(err => this.processarErroHttp(err))
         )
@@ -57,27 +57,16 @@ export class CategoriaService {
         console.log(categoria);
         console.log(id);
 
-        return this.http.put<any>(this.endpoint + id, categoria, this.obterHeadersAutorizacao()).pipe(
+        return this.http.put<any>(this.endpoint + id, categoria).pipe(
             map(res => res.dados),
             catchError(err => this.processarErroHttp(err))
         )
     }
 
     public excluir(id: string): Observable<any> {
-        return this.http.delete(this.endpoint + id, this.obterHeadersAutorizacao())
+        return this.http.delete(this.endpoint + id)
           .pipe(
             catchError((err: HttpErrorResponse) => this.processarErroHttp(err))
           );
       }
-
-    private obterHeadersAutorizacao() {
-        const token = this.localStorageService.obterDadosLocaisSalvos()?.chave;
-
-        return {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            }),
-        };
-    }
 }
